@@ -1,7 +1,10 @@
 import numpy
-# import time
-# import os
+import time
+import os
+import random as rn
+import RPi.GPIO as GPIO
 
-t=5
-y=2*t
-z=5*t
+
+while 1:
+    test = rn.randint(0,1)
+    if
