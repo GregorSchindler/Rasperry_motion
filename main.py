@@ -7,6 +7,9 @@ import vlc
 import time as timer
 import numpy
 from datetime import datetime, date, time
+import requests
+import json
+
 
 
 def main():
@@ -20,8 +23,10 @@ def main():
     elif time(16) > actual_time:
         # find song for during day
         print('day')
+        find_song()
     elif time(22) > actual_time:
         print('evening')
+        find_song()
     else:
         # song for night
         print('night')
@@ -43,6 +48,26 @@ def main():
     timer.sleep(10)
     player.stop()
 
+
+
+def find_song():
+    r = requests.get("http://gdata.youtube.com/feeds/api/standardfeeds/top_rated?v=2&alt=jsonc")
+    r.text
+    print(r.text)
+    # Convert it to a Python dictionary
+    data = json.loads(r.text)
+
+    # Loop through the result.
+    for item in data['data']['items']:
+        print("Video Title: %s" % (item['title']))
+
+        print("Video Category: %s" % (item['category']))
+
+        print("Video ID: %s" % (item['id']))
+
+        print("Video Rating: %f" % (item['rating']))
+
+        print("Embed URL: %s" % (item['player']['default']))
 
 #while 1:
 main()
